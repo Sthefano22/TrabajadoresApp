@@ -1,0 +1,61 @@
+/* Custom styles for Trabajadores App */
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+}
+
+/* Smooth transitions */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom button styles */
+.btn-primary {
+    background: linear-gradient(45deg, var(--secondary-color), #2980b9);
+    border: none;
+    border-radius: 8px;
+}
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    }
+
+/* Card animations */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .card:hover {
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+/* Table improvements */
+.table-hover tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+
+    .btn-group .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+}

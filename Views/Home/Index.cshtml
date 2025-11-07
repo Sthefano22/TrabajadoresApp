@@ -1,0 +1,573 @@
+﻿@{
+    ViewData["Title"] = "Sistema de Gestión de Trabajadores";
+}
+
+<div class="container-fluid px-0">
+    <!-- Hero Section Mejorada -->
+    <section class="hero-section bg-gradient-primary">
+        <div class="container">
+            <div class="row align-items-center min-vh-80 py-5">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <div class="badge-container mb-4">
+                            <span class="badge professional-badge">
+                                <i class="bi bi-shield-check me-2"></i>Sistema Certificado
+                            </span>
+                        </div>
+                        <h1 class="hero-title display-4 fw-bold text-white mb-4">
+                            Gestión Inteligente de
+                            <span class="text-warning">Capital Humano</span>
+                        </h1>
+                        <p class="hero-subtitle lead text-white-75 mb-5">
+                            Plataforma empresarial para administrar, organizar y optimizar
+                            la gestión de su personal con tecnología de vanguardia.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="@Url.Action("Index", "Trabajadores")" class="btn btn-light btn-lg me-3 px-4 py-3">
+                                <i class="bi bi-play-circle-fill me-2"></i>Iniciar Gestión
+                            </a>
+                            <a href="#features" class="btn btn-outline-light btn-lg px-4 py-3">
+                                <i class="bi bi-info-circle me-2"></i>Más Información
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-visual">
+                        <div class="floating-cards">
+                            <div class="card card-1 floating">
+                                <div class="card-body">
+                                    <i class="bi bi-person-badge text-primary"></i>
+                                    <h6>Registro</h6>
+                                </div>
+                            </div>
+                            <div class="card card-2 floating delay-1">
+                                <div class="card-body">
+                                    <i class="bi bi-search text-success"></i>
+                                    <h6>Consulta</h6>
+                                </div>
+                            </div>
+                            <div class="card card-3 floating delay-2">
+                                <div class="card-body">
+                                    <i class="bi bi-graph-up text-warning"></i>
+                                    <h6>Reportes</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Estadísticas Mejoradas -->
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title fw-bold mb-3">Métricas del Sistema</h2>
+                    <p class="section-subtitle text-muted">
+                        Datos en tiempo real de la gestión de personal
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card professional-stat">
+                        <div class="stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">15</h3>
+                            <p class="stat-label">Total Trabajadores</p>
+                            <div class="stat-progress">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card professional-stat bg-primary">
+                        <div class="stat-icon">
+                            <i class="bi bi-gender-male"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">9</h3>
+                            <p class="stat-label">Personal Masculino</p>
+                            <div class="stat-progress">
+                                <div class="progress">
+                                    <div class="progress-bar bg-white" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card professional-stat bg-warning">
+                        <div class="stat-icon">
+                            <i class="bi bi-gender-female"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">6</h3>
+                            <p class="stat-label">Personal Femenino</p>
+                            <div class="stat-progress">
+                                <div class="progress">
+                                    <div class="progress-bar bg-white" style="width: 40%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card professional-stat bg-success">
+                        <div class="stat-icon">
+                            <i class="bi bi-database-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">100%</h3>
+                            <p class="stat-label">Datos Actualizados</p>
+                            <div class="stat-progress">
+                                <div class="progress">
+                                    <div class="progress-bar bg-white" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Características Principales -->
+    <section id="features" class="features-section py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title fw-bold mb-3">Características Principales</h2>
+                    <p class="section-subtitle text-muted">
+                        Funcionalidades diseñadas para optimizar la gestión de personal
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon bg-primary">
+                            <i class="bi bi-person-plus-fill"></i>
+                        </div>
+                        <h4 class="feature-title">Registro Inteligente</h4>
+                        <p class="feature-description">
+                            Sistema de registro completo con validaciones avanzadas y captura eficiente de datos personales y laborales.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Validación en tiempo real</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Campos obligatorios</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Datos estructurados</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon bg-success">
+                            <i class="bi bi-search-heart-fill"></i>
+                        </div>
+                        <h4 class="feature-title">Búsqueda Avanzada</h4>
+                        <p class="feature-description">
+                            Potentes herramientas de filtrado y búsqueda para localizar información específica de manera instantánea.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Filtros múltiples</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Búsqueda por texto</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Resultados en tiempo real</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon bg-warning">
+                            <i class="bi bi-bar-chart-fill"></i>
+                        </div>
+                        <h4 class="feature-title">Reportes y Analytics</h4>
+                        <p class="feature-description">
+                            Generación de reportes detallados y análisis estadísticos para la toma de decisiones estratégicas.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Métricas clave</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Exportación de datos</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Dashboard interactivo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* Variables de diseño profesional */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --dark-bg: #1a1d23;
+    }
+
+    /* Hero Section Profesional */
+    .hero-section {
+        background: var(--primary-gradient);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .min-vh-80 {
+        min-height: 80vh;
+    }
+
+    .professional-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 500;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        line-height: 1.6;
+    }
+
+    .hero-actions .btn {
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .hero-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+    /* Floating Cards Animation */
+    .floating-cards {
+        position: relative;
+        height: 300px;
+    }
+
+        .floating-cards .card {
+            position: absolute;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+    .card-1 {
+        top: 20%;
+        left: 10%;
+        background: white;
+        width: 120px;
+        height: 120px;
+    }
+
+    .card-2 {
+        top: 50%;
+        right: 20%;
+        background: white;
+        width: 100px;
+        height: 100px;
+    }
+
+    .card-3 {
+        bottom: 20%;
+        left: 30%;
+        background: white;
+        width: 110px;
+        height: 110px;
+    }
+
+    .floating-cards .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .floating-cards .card i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .floating-cards .card h6 {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+
+    .delay-1 {
+        animation-delay: 1s;
+    }
+
+    .delay-2 {
+        animation-delay: 2s;
+    }
+
+    @@keyframes floating {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Hero Wave */
+    .hero-wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+        .hero-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px;
+        }
+
+        .hero-wave .shape-fill {
+            fill: #FFFFFF;
+        }
+
+    /* Stats Section Profesional */
+    .stats-section {
+        background: white;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .professional-stat {
+        border: none;
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .professional-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .professional-stat:not(.bg-primary):not(.bg-warning):not(.bg-success) {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+    .stat-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+
+    .stat-progress .progress {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+
+    /* Features Section */
+    .features-section {
+        background: #f8f9fa;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+    }
+
+    .feature-description {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+    }
+
+        .feature-list li {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+    /* CTA Section */
+    .cta-section {
+        background: var(--dark-bg);
+    }
+
+    .cta-title {
+        font-size: 2rem;
+    }
+
+    .cta-description {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .hero-actions .btn {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .floating-cards {
+            height: 200px;
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .professional-stat {
+            padding: 1.5rem 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+        }
+
+        .feature-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .cta-section .text-lg-end {
+            text-align: center !important;
+            margin-top: 2rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animación de contadores (opcional)
+        const statNumbers = document.querySelectorAll('.stat-number');
+
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.textContent);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    stat.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(current);
+                }
+            }, 50);
+        });
+    });
+</script>

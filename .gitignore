@@ -1,0 +1,20 @@
+# Ignorar carpetas temporales
+.vs/
+bin/
+obj/
+.git/
+.github/
+
+# Archivos de usuario y configuración local
+*.user
+*.suo
+*.dbmdl
+*.log
+*.tlog
+*.vscode/
+
+# Configuración de entorno local
+appsettings.Development.json
+
+# Publicaciones y compilaciones
+publish/

@@ -1,0 +1,49 @@
+﻿@model TrabajadoresApp.Models.Trabajador
+
+@{
+    ViewData["Title"] = "Eliminar Trabajador";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="card-title">Confirmar Eliminación</h2>
+                </div>
+                <div class="card-body">
+                    <h4 class="text-danger">¿Está seguro de eliminar el registro?</h4>
+
+                    <div class="alert alert-warning">
+                        <strong>Esta acción no se puede deshacer.</strong>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Nombres:</dt>
+                        <dd class="col-sm-8">@Model.Nombres</dd>
+
+                        <dt class="col-sm-4">Apellidos:</dt>
+                        <dd class="col-sm-8">@Model.Apellidos</dd>
+
+                        <dt class="col-sm-4">Documento:</dt>
+                        <dd class="col-sm-8">@Model.TipoDocumento - @Model.NumeroDocumento</dd>
+
+                        <dt class="col-sm-4">Sexo:</dt>
+                        <dd class="col-sm-8">@Model.Sexo</dd>
+
+                        <dt class="col-sm-4">Fecha Nacimiento:</dt>
+                        <dd class="col-sm-8">@Model.FechaNacimiento.ToString("dd/MM/yyyy")</dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

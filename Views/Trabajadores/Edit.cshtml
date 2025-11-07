@@ -1,0 +1,330 @@
+﻿@model TrabajadoresApp.Models.Trabajador
+
+@{
+    ViewData["Title"] = "Editar Trabajador";
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+            <!-- Header Card -->
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="h3 mb-0">
+                                <i class="bi bi-pencil-square me-2"></i>@ViewData["Title"]
+                            </h1>
+                            <p class="mb-0 opacity-75">Actualiza la información del trabajador seleccionado</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <a asp-action="Index" class="btn btn-light btn-sm">
+                                <i class="bi bi-arrow-left me-1"></i>Volver al Listado
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="card">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0 text-primary">
+                        <i class="bi bi-person-gear me-2"></i>Información del Trabajador
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" class="needs-validation" novalidate>
+                        <input type="hidden" asp-for="Id" />
+
+                        <!-- Alert Messages -->
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["ErrorMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <!-- Datos Personales -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <i class="bi bi-person-vcard me-2"></i>Datos Personales
+                                </h6>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Nombres" class="form-label fw-semibold">Nombres *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-person text-primary"></i>
+                                    </span>
+                                    <input asp-for="Nombres" class="form-control" placeholder="Ingrese los nombres" required />
+                                </div>
+                                <span asp-validation-for="Nombres" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Apellidos" class="form-label fw-semibold">Apellidos *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-person text-primary"></i>
+                                    </span>
+                                    <input asp-for="Apellidos" class="form-control" placeholder="Ingrese los apellidos" required />
+                                </div>
+                                <span asp-validation-for="Apellidos" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Documentación -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <i class="bi bi-card-text me-2"></i>Documentación
+                                </h6>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="TipoDocumento" class="form-label fw-semibold">Tipo Documento *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-card-heading text-primary"></i>
+                                    </span>
+                                    <select asp-for="TipoDocumento" class="form-select" required>
+                                        <option value="">Seleccionar tipo...</option>
+                                        <option value="DNI">DNI</option>
+                                        <option value="Carnet Extranjería">Carnet Extranjería</option>
+                                        <option value="Pasaporte">Pasaporte</option>
+                                        <option value="RUC">RUC</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="TipoDocumento" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="NumeroDocumento" class="form-label fw-semibold">Número Documento *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-123 text-primary"></i>
+                                    </span>
+                                    <input asp-for="NumeroDocumento" class="form-control" placeholder="Número de documento" required />
+                                </div>
+                                <span asp-validation-for="NumeroDocumento" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Sexo" class="form-label fw-semibold">Sexo *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-gender-ambiguous text-primary"></i>
+                                    </span>
+                                    <select asp-for="Sexo" class="form-select" required>
+                                        <option value="">Seleccionar sexo...</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Femenino">Femenino</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Sexo" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Información Adicional -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <i class="bi bi-info-circle me-2"></i>Información Adicional
+                                </h6>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FechaNacimiento" class="form-label fw-semibold">Fecha de Nacimiento *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-calendar-date text-primary"></i>
+                                    </span>
+                                    <input asp-for="FechaNacimiento" type="date" class="form-control" required />
+                                </div>
+                                <span asp-validation-for="FechaNacimiento" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Foto" class="form-label fw-semibold">Foto (URL)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-image text-primary"></i>
+                                    </span>
+                                    <input asp-for="Foto" class="form-control" placeholder="https://ejemplo.com/foto.jpg" />
+                                </div>
+                                <span asp-validation-for="Foto" class="text-danger small"></span>
+                                <div class="form-text">Ingrese la URL de la imagen del trabajador</div>
+                            </div>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <i class="bi bi-geo-alt me-2"></i>Dirección
+                                </h6>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label asp-for="Direccion" class="form-label fw-semibold">Dirección Completa</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-house text-primary"></i>
+                                    </span>
+                                    <textarea asp-for="Direccion" class="form-control" rows="3" placeholder="Ingrese la dirección completa del trabajador..."></textarea>
+                                </div>
+                                <span asp-validation-for="Direccion" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Información del Sistema (Solo lectura) -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <i class="bi bi-clock-history me-2"></i>Información del Sistema
+                                </h6>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Fecha de Creación</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-calendar-plus text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control" value="@Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")" readonly />
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Última Actualización</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-calendar-check text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control" value="@(Model.FechaActualizacion?.ToString("dd/MM/yyyy HH:mm") ?? "Sin actualizaciones")" readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                        <i class="bi bi-x-circle me-2"></i>Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="bi bi-check-circle me-2"></i>Actualizar Trabajador
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Bootstrap validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Auto-select current values in dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select current TipoDocumento
+            const tipoDocumentoSelect = document.querySelector('select[name="TipoDocumento"]');
+            if (tipoDocumentoSelect) {
+                const currentTipoDocumento = '@Model.TipoDocumento';
+                tipoDocumentoSelect.value = currentTipoDocumento;
+            }
+
+            // Select current Sexo
+            const sexoSelect = document.querySelector('select[name="Sexo"]');
+            if (sexoSelect) {
+                const currentSexo = '@Model.Sexo';
+                sexoSelect.value = currentSexo;
+            }
+
+            // Format date for input[type="date"]
+            const fechaNacimientoInput = document.querySelector('input[name="FechaNacimiento"]');
+            if (fechaNacimientoInput) {
+                const fechaNacimiento = new Date('@Model.FechaNacimiento.ToString("yyyy-MM-dd")');
+                fechaNacimientoInput.value = fechaNacimiento.toISOString().split('T')[0];
+            }
+        });
+    </script>
+}
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .card-header {
+        border-radius: 12px 12px 0 0 !important;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group-text {
+        border-right: none;
+    }
+
+    .form-control, .form-select {
+        border-left: none;
+        padding-left: 0.5rem;
+    }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: none;
+            border-color: #86b7fe;
+        }
+
+    .input-group:focus-within {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        border-radius: 0.375rem;
+    }
+
+    .btn {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .d-flex.gap-2 {
+            flex-direction: column;
+        }
+    }
+</style>

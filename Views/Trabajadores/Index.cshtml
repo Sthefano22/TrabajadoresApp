@@ -1,0 +1,893 @@
+﻿@model IEnumerable<TrabajadoresApp.Models.Trabajador>
+
+@{
+    ViewData["Title"] = "Gestión de Trabajadores";
+}
+
+<div class="container-fluid py-4">
+    <!-- Header Section Mejorado -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card custom-header-card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center">
+                                <div class="header-icon-container me-3">
+                                    <i class="bi bi-people-fill header-icon"></i>
+                                </div>
+                                <div>
+                                    <h1 class="h3 mb-1 text-white">@ViewData["Title"]</h1>
+                                    <p class="mb-0 text-white">Sistema integral de gestión de personal</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <a asp-action="Create" class="btn btn-success btn-lg shadow">
+                                <i class="bi bi-person-plus me-2"></i>Nuevo Trabajador
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards Mejoradas -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card-1 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="card-title text-white mb-1">@Model.Count()</h3>
+                            <p class="card-text text-white-75 mb-0">Total Trabajadores</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-3" style="height: 4px;">
+                        <div class="progress-bar bg-white" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card-2 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="card-title text-white mb-1">@Model.Count(t => t.Sexo == "Masculino")</h3>
+                            <p class="card-text text-white-75 mb-0">Hombres</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="bi bi-gender-male"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-3" style="height: 4px;">
+                        <div class="progress-bar bg-white" style="width: @((Model.Count(t => t.Sexo == "Masculino") * 100) / (Model.Count() == 0 ? 1 : Model.Count()))%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card-3 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="card-title text-white mb-1">@Model.Count(t => t.Sexo == "Femenino")</h3>
+                            <p class="card-text text-white-75 mb-0">Mujeres</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="bi bi-gender-female"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-3" style="height: 4px;">
+                        <div class="progress-bar bg-white" style="width: @((Model.Count(t => t.Sexo == "Femenino") * 100) / (Model.Count() == 0 ? 1 : Model.Count()))%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="card-title text-white mb-1">@Model.Average(t => t.Edad).ToString("0")</h3>
+                            <p class="card-text text-white-75 mb-0">Edad Promedio</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="bi bi-calendar-heart"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-3" style="height: 4px;">
+                        <div class="progress-bar bg-white" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Messages Mejorado -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-custom-success alert-dismissible fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill me-3 alert-icon"></i>
+                <div class="flex-grow-1">
+                    <h6 class="alert-title mb-1">¡Operación Exitosa!</h6>
+                    <p class="mb-0">@TempData["SuccessMessage"]</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    }
+
+    <!-- Filtros Section Mejorado -->
+    <div class="card custom-filter-card mb-4">
+        <div class="card-header bg-transparent border-0 pb-0">
+            <h6 class="card-title mb-0">
+                <i class="bi bi-funnel-fill me-2 text-primary"></i>Filtros Avanzados
+            </h6>
+        </div>
+        <div class="card-body pt-2">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-3 col-md-6">
+                    <label for="filtroSexo" class="form-label fw-semibold small text-uppercase text-muted">Filtrar por Sexo</label>
+                    <div class="input-group input-group-custom">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-gender-ambiguous text-primary"></i>
+                        </span>
+                        <select id="filtroSexo" class="form-select border-start-0">
+                            <option value="">Todos los sexos</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <label for="busquedaTexto" class="form-label fw-semibold small text-uppercase text-muted">Búsqueda por Nombre</label>
+                    <div class="input-group input-group-custom">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-search text-primary"></i>
+                        </span>
+                        <input type="text" id="busquedaTexto" class="form-control border-start-0" placeholder="Buscar por nombre o apellido...">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label for="filtroDocumento" class="form-label fw-semibold small text-uppercase text-muted">Tipo de Documento</label>
+                    <div class="input-group input-group-custom">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="bi bi-card-text text-primary"></i>
+                        </span>
+                        <select id="filtroDocumento" class="form-select border-start-0">
+                            <option value="">Todos los documentos</option>
+                            <option value="DNI">DNI</option>
+                            <option value="Carnet Extranjería">Carnet Extranjería</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <button id="btnLimpiarFiltros" class="btn btn-outline-secondary w-100 h-100 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-arrow-clockwise me-2"></i>
+                        <span>Limpiar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section Mejorado -->
+    <div class="card custom-table-card">
+        <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                <h5 class="card-title mb-0 fw-bold text-dark">
+                    <i class="bi bi-table me-2 text-primary"></i>Lista de Trabajadores
+                </h5>
+                <span class="badge custom-badge-primary ms-3" id="contadorRegistros">@Model.Count()</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <small class="text-muted fw-semibold" id="textoFiltros"></small>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-primary" id="btnExportar">
+                        <i class="bi bi-download me-1"></i>Exportar
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary" id="btnRefresh">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-container">
+                    <table class="table custom-table" id="tablaTrabajadores">
+                        <thead class="custom-thead">
+                            <tr>
+                                <th class="ps-4">
+                                    <i class="bi bi-person me-2"></i>Nombre Completo
+                                </th>
+                                <th>
+                                    <i class="bi bi-card-text me-2"></i>Documento
+                                </th>
+                                <th>
+                                    <i class="bi bi-gender-ambiguous me-2"></i>Sexo
+                                </th>
+                                <th>
+                                    <i class="bi bi-calendar3 me-2"></i>Edad
+                                </th>
+                                <th>
+                                    <i class="bi bi-geo-alt me-2"></i>Dirección
+                                </th>
+                                <th>
+                                    <i class="bi bi-clock me-2"></i>Fecha Registro
+                                </th>
+                                <th class="text-center pe-4">
+                                    <i class="bi bi-lightning-charge me-2"></i>Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="custom-table-row @(item.Sexo == "Masculino" ? "row-masculino" : "row-femenino")"
+                                    data-sexo="@item.Sexo"
+                                    data-documento="@item.TipoDocumento"
+                                    data-nombre="@item.NombreCompleto.ToLower()">
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar @(item.Sexo == "Masculino" ? "avatar-masculino" : "avatar-femenino") me-3">
+                                                @if (!string.IsNullOrEmpty(item.Foto))
+                                                {
+                                                    <img src="@item.Foto" alt="@item.NombreCompleto" class="avatar-img">
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-person avatar-icon"></i>
+                                                }
+                                            </div>
+                                            <div class="user-info">
+                                                <h6 class="mb-0 user-name">@item.NombreCompleto</h6>
+                                                <small class="text-muted user-email">@item.TipoDocumento: @item.NumeroDocumento</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge custom-badge-secondary">@item.TipoDocumento</span>
+                                    </td>
+                                    <td>
+                                        @if (item.Sexo == "Masculino")
+                                        {
+                                            <span class="badge custom-badge-masculino">
+                                                <i class="bi bi-gender-male me-1"></i>@item.Sexo
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge custom-badge-femenino">
+                                                <i class="bi bi-gender-female me-1"></i>@item.Sexo
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="age-indicator">
+                                            <span class="age-value">@item.Edad</span>
+                                            <small class="text-muted">años</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="address-text" title="@item.Direccion">
+                                            @item.Direccion
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="date-info">
+                                            <div class="date-main">@item.FechaCreacion.ToString("dd/MM/yyyy")</div>
+                                            <div class="date-time text-muted">@item.FechaCreacion.ToString("HH:mm")</div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <div class="action-buttons">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-action btn-edit" title="Editar">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-action btn-delete" title="Eliminar">
+                                                <i class="bi bi-trash3"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer de la tabla -->
+                <div class="card-footer bg-transparent border-0">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="table-info">
+                                <i class="bi bi-info-circle me-2 text-muted"></i>
+                                Mostrando <span class="fw-bold text-primary" id="registrosMostrados">@Model.Count()</span> de @Model.Count() registros
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <div class="table-actions">
+                                <button class="btn btn-sm btn-outline-primary" id="btnScrollTop">
+                                    <i class="bi bi-arrow-up"></i> Volver Arriba
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="empty-state text-center py-5">
+                    <div class="empty-icon mb-4">
+                        <i class="bi bi-people display-1 text-muted"></i>
+                    </div>
+                    <h4 class="text-muted mb-3">No hay trabajadores registrados</h4>
+                    <p class="text-muted mb-4">Comienza agregando el primer trabajador al sistema.</p>
+                    <a asp-action="Create" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus me-2"></i>Agregar Primer Trabajador
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filtroSexo = document.getElementById('filtroSexo');
+            const filtroDocumento = document.getElementById('filtroDocumento');
+            const busquedaTexto = document.getElementById('busquedaTexto');
+            const btnLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
+            const tablaTrabajadores = document.getElementById('tablaTrabajadores');
+            const contadorRegistros = document.getElementById('contadorRegistros');
+            const registrosMostrados = document.getElementById('registrosMostrados');
+            const textoFiltros = document.getElementById('textoFiltros');
+            const btnRefresh = document.getElementById('btnRefresh');
+            const btnScrollTop = document.getElementById('btnScrollTop');
+
+            // Aplicar filtros
+            function aplicarFiltros() {
+                const sexoSeleccionado = filtroSexo.value;
+                const documentoTipo = filtroDocumento.value;
+                const textoBusqueda = busquedaTexto.value.toLowerCase();
+
+                let registrosVisibles = 0;
+                const filas = tablaTrabajadores.querySelectorAll('tbody tr');
+
+                filas.forEach(fila => {
+                    const sexoFila = fila.getAttribute('data-sexo');
+                    const documentoTipoFila = fila.getAttribute('data-documento');
+                    const nombreFila = fila.getAttribute('data-nombre');
+
+                    const coincideSexo = !sexoSeleccionado || sexoFila === sexoSeleccionado;
+                    const coincideDocumento = !documentoTipo || documentoTipoFila === documentoTipo;
+                    const coincideTexto = !textoBusqueda || nombreFila.includes(textoBusqueda);
+
+                    if (coincideSexo && coincideDocumento && coincideTexto) {
+                        fila.style.display = '';
+                        registrosVisibles++;
+                    } else {
+                        fila.style.display = 'none';
+                    }
+                });
+
+                // Actualizar contadores
+                contadorRegistros.textContent = registrosVisibles;
+                registrosMostrados.textContent = registrosVisibles;
+                actualizarTextoFiltros(sexoSeleccionado, documentoTipo, textoBusqueda);
+            }
+
+            function actualizarTextoFiltros(sexo, documento, texto) {
+                const filtros = [];
+                if (sexo) filtros.push(`Sexo: ${sexo}`);
+                if (documento) filtros.push(`Documento: ${documento}`);
+                if (texto) filtros.push(`Búsqueda: "${texto}"`);
+
+                textoFiltros.textContent = filtros.length > 0 ? `Filtros activos: ${filtros.join(', ')}` : '';
+            }
+
+            // Event listeners
+            filtroSexo.addEventListener('change', aplicarFiltros);
+            filtroDocumento.addEventListener('change', aplicarFiltros);
+            busquedaTexto.addEventListener('input', aplicarFiltros);
+
+            btnLimpiarFiltros.addEventListener('click', function() {
+                filtroSexo.value = '';
+                filtroDocumento.value = '';
+                busquedaTexto.value = '';
+                aplicarFiltros();
+            });
+
+            btnRefresh.addEventListener('click', function() {
+                window.location.reload();
+            });
+
+            btnScrollTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Efectos hover mejorados
+            const filas = tablaTrabajadores.querySelectorAll('tbody tr');
+            filas.forEach(fila => {
+                fila.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                });
+
+                fila.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+
+            // Exportar datos
+            document.getElementById('btnExportar').addEventListener('click', function() {
+                // Simulación de exportación
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Datos exportados exitosamente'
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Variables de colores personalizados */
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --accent-color: #e67e22; /* Naranja para femenino */
+        --success-color: #27ae60;
+        --warning-color: #f39c12;
+        --danger-color: #e74c3c;
+        --light-bg: #f8f9fa;
+        --border-color: #e9ecef;
+    }
+
+    /* Header Personalizado */
+    .custom-header-card {
+        background: linear-gradient(135deg, var(--primary-color), #34495e);
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15);
+    }
+
+    .header-icon-container {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .header-icon {
+        font-size: 1.8rem;
+        color: white;
+    }
+
+    /* Stats Cards Personalizadas */
+    .stat-card-1 {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .stat-card-2 {
+        background: linear-gradient(135deg, #004cff, #1fa6fff0);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    }
+
+    .stat-card-3 {
+        background: linear-gradient(135deg, #ff4c00de, #cf7336);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    .stat-card-4 {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        opacity: 0.8;
+    }
+
+    /* Alert Personalizado */
+    .alert-custom-success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: none;
+        border-radius: 12px;
+        border-left: 4px solid var(--success-color);
+    }
+
+    .alert-icon {
+        font-size: 1.5rem;
+    }
+
+    .alert-title {
+        font-weight: 600;
+        color: var(--success-color);
+    }
+
+    /* Filtros Personalizados */
+    .custom-filter-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        background: white;
+    }
+
+    .input-group-custom .form-control,
+    .input-group-custom .form-select {
+        border-radius: 0 8px 8px 0;
+        border: 1px solid var(--border-color);
+        border-left: none;
+    }
+
+    .input-group-custom .input-group-text {
+        border-radius: 8px 0 0 8px;
+        border: 1px solid var(--border-color);
+        border-right: none;
+        background: white;
+    }
+
+    /* Tabla Personalizada */
+    .custom-table-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .custom-thead {
+        background: linear-gradient(135deg, var(--primary-color), #34495e);
+    }
+
+        .custom-thead th {
+            color: white;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            border: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    .custom-table-row {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+        .custom-table-row:last-child {
+            border-bottom: none;
+        }
+
+    /* Colores por sexo - BONUS IMPLEMENTADO */
+    .row-masculino {
+        background: linear-gradient(90deg, rgba(52, 152, 219, 0.03) 0%, transparent 100%);
+        border-left: 4px solid #004cff;
+    }
+
+    .row-femenino {
+        background: linear-gradient(90deg, rgba(230, 126, 34, 0.05) 0%, transparent 100%);
+        border-left: 4px solid #ff4c00de;
+    }
+
+    .row-masculino:hover {
+        background: linear-gradient(90deg, rgba(52, 152, 219, 0.08) 0%, rgba(52, 152, 219, 0.02) 100%);
+    }
+
+    .row-femenino:hover {
+        background: linear-gradient(90deg, rgba(230, 126, 34, 0.1) 0%, rgba(230, 126, 34, 0.02) 100%);
+    }
+
+    /* Avatar Personalizado */
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .avatar-masculino {
+        background: linear-gradient(135deg, var(--secondary-color), #004cff);
+    }
+
+    .avatar-femenino {
+        background: linear-gradient(135deg, var(--accent-color), #ff4c00de); /* Naranja */
+    }
+
+    .avatar-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    .user-info {
+        flex: 1;
+    }
+
+    .user-name {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .user-email {
+        font-size: 0.8rem;
+    }
+
+    /* Badges Personalizados */
+    .custom-badge-primary {
+        background: var(--secondary-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .custom-badge-secondary {
+        background: #6c757d;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .custom-badge-masculino {
+        background: #004cff;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border: 8px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .custom-badge-femenino {
+        background: #ff4c00de;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    /* Indicadores de Edad */
+    .age-indicator {
+        text-align: center;
+    }
+
+    .age-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    /* Dirección */
+    .address-text {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Fecha */
+    .date-info {
+        text-align: center;
+    }
+
+    .date-main {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .date-time {
+        font-size: 0.8rem;
+    }
+
+    /* Botones de Acción */
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .btn-action {
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: rgba(52, 152, 219, 0.1);
+        color: var(--secondary-color);
+    }
+
+        .btn-edit:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+    .btn-delete {
+        background: rgba(231, 76, 60, 0.1);
+        color: #ff1800;
+    }
+
+        .btn-delete:hover {
+            background: var(--danger-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+    /* Estado vacío */
+    .empty-state {
+        padding: 3rem 2rem;
+    }
+
+    .empty-icon {
+        opacity: 0.5;
+    }
+
+    /* Responsive Design Mejorado */
+    @@media (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+
+        .custom-header-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .header-icon-container {
+            width: 50px;
+            height: 50px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+        }
+
+        .custom-table-row td {
+            padding: 1rem 0.5rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .btn-action {
+            width: 30px;
+            height: 30px;
+        }
+
+        .address-text {
+            max-width: 150px;
+        }
+
+        .table-info, .table-actions {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .card-body {
+            padding: 1rem;
+        }
+
+        .custom-thead th {
+            font-size: 0.8rem;
+            padding: 0.75rem 0.5rem;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+        }
+
+        .age-value {
+            font-size: 1rem;
+        }
+    }
+
+    /* Animaciones */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .custom-table-row {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Scroll personalizado */
+    .table-container::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 10px;
+    }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+</style>
